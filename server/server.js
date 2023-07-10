@@ -1,3 +1,6 @@
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
 import Database from "./db/database.js";
 import express from "express";
 import cors from "cors";
@@ -66,6 +69,8 @@ app.post("/countries/batch", async (req, res) => {
 });
 
 // production
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(__dirname + "/public/"));
   app.get(/.*/, (req, res) => res.sendFile(__dirname + "/public/index.html"));
