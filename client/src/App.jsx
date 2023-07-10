@@ -115,7 +115,7 @@ function App() {
             userOptions={userOptions}
             onUserSelection={handleUserSelection}
           />
-          {userData?.length > 0 && (
+          {userData?.length ? (
             <>
               <ul>
                 {userData.map((item) => (
@@ -131,6 +131,11 @@ function App() {
                 ))}
               </ul>
             </>
+          ) : (
+            <div className="no-data">
+              <div>No Countries selected</div>
+              <div>Add Some</div>
+            </div>
           )}
         </div>
       ) : (
