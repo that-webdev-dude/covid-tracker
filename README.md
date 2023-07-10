@@ -26,3 +26,7 @@ A live demo of the project is available [here](https://that-covid-tracker-3e95c6
 This project is licensed under the MIT License.
 
 ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+
+<img src="https://github.com/that-webdev-dude/covid-tracker/blob/main/screengrabs/Screenshot%202023-07-10%20192033.png">
+
+![Screenshot](https://github.com/that-webdev-dude/covid-tracker/blob/main/screengrabs/Screenshot%202023-07-10%20192033.png)
