@@ -476,7 +476,7 @@ const generate = () => {
       totalDeaths: rand(5000, 10000),
       todayCases: rand(100, 200),
       todayDeaths: rand(50, 100),
-      lastUpdate: endDate,
+      lastUpdate: getFormattedDate(endDate),
       history: {
         date: casesSeries.map((item) => {
           return item.date;

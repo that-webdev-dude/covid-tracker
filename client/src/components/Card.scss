@@ -1,0 +1,107 @@
+/* Card.scss */
+
+.card {
+  padding: 1rem;
+  background: rgb(173, 14, 93);
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  color: #fff;
+
+  .header {
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+      display: inline-flex;
+      align-items: center;
+
+      .title-text {
+        margin-top: 1px;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .title-thumb {
+        margin-right: 0.75rem;
+        display: block;
+        width: 24px;
+        height: 16px;
+      }
+    }
+
+    .controls {
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+
+  .info {
+    display: grid;
+    grid-column-gap: 0.25rem;
+    grid-template-columns: 0.5fr 0.5fr;
+    margin-bottom: 0.25rem;
+
+    .app-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: lighten(#ad0e5d, 5);
+      padding: 1.25rem 0;
+
+      .value {
+        font-size: 1.5rem;
+        font-weight: 400;
+      }
+
+      .title,
+      .extra {
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  .btn {
+    background: rgb(173, 14, 93);
+    border: none;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 0.25rem;
+    outline: none;
+
+    .unselected {
+      color: rgba(255, 255, 255, 0.25);
+    }
+  }
+
+  .last-update {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.25);
+    display: block;
+    margin: 1rem 0 0.25rem;
+    text-align: center;
+  }
+
+  .graph {
+    margin-bottom: 0.25rem;
+
+    .chart-container {
+      width: 100%;
+      height: 200px;
+      margin-bottom: 0.25rem;
+      background-color: lighten(rgb(173, 14, 93), 5);
+    }
+
+    .chart {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

@@ -1,4 +1,6 @@
-import "./Autocomplete.css";
+import "./Autocomplete.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect } from "react";
 
 const Autocomplete = ({ userOptions = [], onUserSelection }) => {
@@ -48,27 +50,32 @@ const Autocomplete = ({ userOptions = [], onUserSelection }) => {
   return (
     <div className="autocomplete">
       <input
+        className="elevated"
         type="text"
         value={inputValue}
         onChange={handleInputChange}
-        placeholder="add a country..."
+        placeholder="Add a country..."
       />
 
-      <button onClick={handleClearButtonClick}>clear</button>
+      <button onClick={handleClearButtonClick}>
+        <FontAwesomeIcon icon={faTimes} />
+      </button>
 
       {inputValue !== "" && (
-        <ul>
+        <ul className="menu elevated">
           {suggestions.map((suggestion, index) => (
             <li
+              className="menu-item"
               key={index}
               onClick={(e) => handleSuggestionClick(e, suggestion)}
             >
+              <div className="menu-item-text">{suggestion.name}</div>
               <img
+                className="menu-item-thumb"
                 src={suggestion.img}
                 alt={`${suggestion.name}'s Flag`}
                 width="30"
               />
-              <span>{suggestion.name}</span>
             </li>
           ))}
         </ul>

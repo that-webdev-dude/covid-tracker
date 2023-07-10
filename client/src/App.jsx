@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import { useState, useEffect } from "react";
 import Storage from "./tools/Storage";
 import Autocomplete from "./components/Autocomplete";
@@ -58,7 +58,7 @@ function App() {
             const response = await fetch(`countries/name/${userSelection}`);
             if (response.ok) {
               const data = await response.json();
-              setUserData([...userData, data]);
+              setUserData([data, ...userData]);
             } else {
               throw new Error("Error fetching country data");
             }
@@ -108,7 +108,7 @@ function App() {
 
   // template
   return (
-    <div>
+    <div className="app-container">
       {ready ? (
         <div>
           <Autocomplete
