@@ -64,15 +64,6 @@ function App() {
             }
           }
         }
-        // if (userSelection !== "") {
-        //   const selected = userData.find((item) => item.name === userSelection);
-        //   if (selected) {
-        //     return;
-        //   } else {
-        //     const dataItem = await Service.async_getCountry(userSelection);
-        //     setUserData([...userData, dataItem]);
-        //   }
-        // }
       } catch (error) {
         console.log(error);
       }
