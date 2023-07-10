@@ -139,7 +139,9 @@ function App() {
           )}
         </div>
       ) : (
-        <p>Loading...</p>
+        <div className="no-data">
+          <div>...Loading...</div>
+        </div>
       )}
     </div>
   );
