@@ -13,6 +13,8 @@ One notable feature of the COVID Tracker app is the pin functionality. Users can
 
 The app is fully responsive, ensuring a seamless user experience across various devices and screen sizes. The user interface is designed to be simple and intuitive, making it easy for users to find the information they need.
 
+<img width="500px" src="https://github.com/that-webdev-dude/covid-tracker/blob/main/screengrabs/Screenshot%202023-07-10%20192033.png" alt="app screengrab">
+
 ### Live Demo
 
 A live demo of the project is available [here](https://that-covid-tracker-3e95c67801e1.herokuapp.com/).
@@ -26,7 +28,3 @@ A live demo of the project is available [here](https://that-covid-tracker-3e95c6
 This project is licensed under the MIT License.
 
 ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
-
-<img width="100px" src="https://github.com/that-webdev-dude/covid-tracker/blob/main/screengrabs/Screenshot%202023-07-10%20192033.png">
-
-![Screenshot](https://github.com/that-webdev-dude/covid-tracker/blob/main/screengrabs/Screenshot%202023-07-10%20192033.png)
