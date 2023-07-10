@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Storage from "./tools/Storage";
 import Autocomplete from "./components/Autocomplete";
 import Chart from "./components/Chart";
+import Card from "./components/Card";
 
 function App() {
   const [userSelection, setUserSelection] = useState("");
@@ -11,7 +12,7 @@ function App() {
   const [userPins, setUserPins] = useState([]);
   const [ready, setReady] = useState(false);
 
-  // initialize
+  // side effects
   useEffect(() => {
     const initialize = async () => {
       try {
@@ -49,7 +50,6 @@ function App() {
     initialize();
   }, [ready]);
 
-  // fetch on selection
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -72,38 +72,42 @@ function App() {
     fetchData();
   }, [userSelection]);
 
+  // handlers
   const handleUserSelection = (userSelection) => {
     setUserSelection(userSelection);
   };
 
-  const handleCloseButtonClick = (e, itemName) => {
-    e.preventDefault();
-    let updatedUserData = userData.filter((item) => {
-      return item.name !== itemName;
-    });
-    setUserData(updatedUserData);
+  const handleCardClose = (itemID) => {
+    setUserData(
+      userData.filter((item) => {
+        return item.id !== itemID;
+      })
+    );
   };
 
-  const handlePinButtonClick = async (e, itemID) => {
-    e.preventDefault();
-    let updatedUserPins = [...userPins, itemID];
-    setUserPins(updatedUserPins);
-    await Storage.async_setItems(updatedUserPins);
+  const handleCardPin = async (itemID) => {
+    try {
+      let pins = [...userPins, itemID];
+      await Storage.async_setItems(pins);
+      setUserPins(pins);
+    } catch (error) {
+      console.log("file: App.jsx:94 ~ handleCardPin ~ error:", error);
+    }
   };
 
-  const handleUnpinButtonClick = async (e, itemID) => {
-    e.preventDefault();
-    let updatedUserPins = userPins.filter((item) => {
-      return item !== itemID;
-    });
-    setUserPins(updatedUserPins);
-    await Storage.async_setItems(updatedUserPins);
+  const handleCardUnpin = async (itemID) => {
+    try {
+      let updatedUserPins = userPins.filter((item) => {
+        return item !== itemID;
+      });
+      setUserPins(updatedUserPins);
+      await Storage.async_setItems(updatedUserPins);
+    } catch (error) {
+      console.log("file: App.jsx:107 ~ handleCardUnpin ~ error:", error);
+    }
   };
 
-  const itemIsPinned = (itemID) => {
-    return userPins.includes(itemID);
-  };
-
+  // template
   return (
     <div>
       {ready ? (
@@ -117,42 +121,12 @@ function App() {
               <ul>
                 {userData.map((item) => (
                   <li key={item.id}>
-                    {itemIsPinned(item.id) ? (
-                      // unpin/unpin button
-                      <button
-                        onClick={(e) => {
-                          handleUnpinButtonClick(e, item.id);
-                        }}
-                      >
-                        unpin
-                      </button>
-                    ) : (
-                      <button
-                        onClick={(e) => {
-                          handlePinButtonClick(e, item.id);
-                        }}
-                      >
-                        pin
-                      </button>
-                    )}
-
-                    <button
-                      onClick={(e) => {
-                        handleCloseButtonClick(e, item.name);
-                      }}
-                    >
-                      close
-                    </button>
-
-                    <div>{item.name}</div>
-                    <div>{item.totalCases}</div>
-                    <div>{item.totalDeaths}</div>
-                    <div>{item.todayCases}</div>
-                    <div>{item.todayDeaths}</div>
-                    <Chart
-                      xAxis={item.history.date}
-                      series1={item.history.cases}
-                      series2={item.history.deaths}
+                    <Card
+                      item={item}
+                      bookmark={userPins.includes(item.id)}
+                      onClose={handleCardClose}
+                      onUnpin={handleCardUnpin}
+                      onPin={handleCardPin}
                     />
                   </li>
                 ))}
@@ -168,17 +142,3 @@ function App() {
 }
 
 export default App;
-
-// import React from "react";
-// import Chart from "./components/Chart";
-// import "./App.css";
-
-// const App = () => {
-//   return (
-//     <div className="App">
-//       <Chart />
-//     </div>
-//   );
-// };
-
-// export default App;

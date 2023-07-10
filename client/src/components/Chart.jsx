@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import "./Chart.css";
 import * as echarts from "echarts";
 
 const Chart = ({ xAxis, series1, series2 }) => {
