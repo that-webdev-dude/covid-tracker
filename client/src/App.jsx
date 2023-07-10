@@ -2,7 +2,6 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import Storage from "./tools/Storage";
 import Autocomplete from "./components/Autocomplete";
-import Chart from "./components/Chart";
 import Card from "./components/Card";
 
 function App() {

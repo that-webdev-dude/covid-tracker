@@ -64,19 +64,6 @@ app.post("/countries/batch", async (req, res) => {
   }
   res.json(countries);
 });
-// app.post("/countries/batch", (req, res) => {
-//   const { countryIDs } = req.body;
-//   const countries = [];
-
-//   for (const id of countryIDs) {
-//     const country = db.findById(id);
-//     if (country) {
-//       countries.push(country);
-//     }
-//   }
-
-//   res.json(countries);
-// });
 
 // production
 if (process.env.NODE_ENV === "production") {
