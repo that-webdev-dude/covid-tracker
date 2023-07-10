@@ -409,7 +409,7 @@ function generateTimeSeries(
  * @returns data[]
  */
 const generate = () => {
-  const data = Object.keys(countries).map((code) => {
+  const data = Object.keys(countries).map((code, index) => {
     const startDate = new Date(2023, 0, 1); // January 1, 2023
     const endDate = new Date(2023, 3, 31); // March 31, 2023
     const peakDate = new Date(2023, 1, 28); // Feb 28, 2023
@@ -422,7 +422,8 @@ const generate = () => {
     const offset = rand(400, 600);
 
     return {
-      id: `_${uid(15)}`,
+      // id: `_${uid(15)}`,
+      id: `_${index}`,
       code,
       name: countries[code],
       img: `https://flagcdn.com/${code}.svg`,

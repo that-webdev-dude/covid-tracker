@@ -7,6 +7,8 @@ const app = express();
 const db = new Database();
 
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/countries", (req, res) => {
   const countries = db.map((item) => ({
@@ -50,6 +52,31 @@ app.get("/countries/code/:countryCode", (req, res) => {
       res.status(404).json({ error: error.message });
     });
 });
+
+app.post("/countries/batch", async (req, res) => {
+  const { countryIDs } = req.body;
+  const countries = [];
+  for (const id of countryIDs) {
+    const country = await db.findById(id);
+    if (country) {
+      countries.push(country);
+    }
+  }
+  res.json(countries);
+});
+// app.post("/countries/batch", (req, res) => {
+//   const { countryIDs } = req.body;
+//   const countries = [];
+
+//   for (const id of countryIDs) {
+//     const country = db.findById(id);
+//     if (country) {
+//       countries.push(country);
+//     }
+//   }
+
+//   res.json(countries);
+// });
 
 // production
 if (process.env.NODE_ENV === "production") {
