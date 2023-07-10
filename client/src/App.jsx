@@ -15,18 +15,33 @@ function App() {
   useEffect(() => {
     const initialize = async () => {
       try {
-        let options = await Service.async_getOptions();
-        let pins = await Storage.async_getItems();
-        let data = await Service.async_getCountries(pins);
-        setUserOptions(options);
-        setUserData(data);
-        setUserPins(pins);
-        setReady(true);
+        const response = await fetch("/countries");
+        if (response.ok) {
+          const data = await response.json();
+          setUserOptions(data);
+          setReady(true);
+        } else {
+          throw new Error("Error fetching country data");
+        }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     initialize();
+    // const initialize = async () => {
+    //   try {
+    //     let options = await Service.async_getOptions();
+    //     let pins = await Storage.async_getItems();
+    //     let data = await Service.async_getCountries(pins);
+    //     setUserOptions(options);
+    //     setUserData(data);
+    //     setUserPins(pins);
+    //     setReady(true);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+    // initialize();
   }, [ready]);
 
   // fetch on selection
@@ -82,54 +97,64 @@ function App() {
   };
 
   return (
-    <>
-      <Autocomplete
-        userOptions={userOptions}
-        onUserSelection={handleUserSelection}
-      />
-
-      {userData?.length > 0 && (
-        <ul>
-          {userData.map((item, index) => (
-            <li key={index}>
-              {itemIsPinned(item.name) ? (
-                // unpin button
-                <button
-                  onClick={(e) => {
-                    handleUnpinButtonClick(e, item.name);
-                  }}
-                >
-                  unpin
-                </button>
-              ) : (
-                // pin button
-                <button
-                  onClick={(e) => {
-                    handlePinButtonClick(e, item.name);
-                  }}
-                >
-                  pin
-                </button>
-              )}
-
-              <button
-                onClick={(e) => {
-                  handleCloseButtonClick(e, item.name);
-                }}
-              >
-                close
-              </button>
-
-              <div>{item.name}</div>
-              <div>{item.cases}</div>
-              <div>{item.deaths}</div>
-              <div>{item.todayCases}</div>
-              <div>{item.todayDeaths}</div>
-            </li>
-          ))}
-        </ul>
+    <div>
+      {ready ? (
+        <div>
+          <Autocomplete userOptions={userOptions} onUserSelection={() => {}} />
+        </div>
+      ) : (
+        <p>Loading...</p>
       )}
-    </>
+    </div>
+    // <>
+
+    //   <Autocomplete
+    //     userOptions={userOptions}
+    //     onUserSelection={handleUserSelection}
+    //   />
+
+    //   {userData?.length > 0 && (
+    //     <ul>
+    //       {userData.map((item, index) => (
+    //         <li key={index}>
+    //           {itemIsPinned(item.name) ? (
+    //             // unpin button
+    //             <button
+    //               onClick={(e) => {
+    //                 handleUnpinButtonClick(e, item.name);
+    //               }}
+    //             >
+    //               unpin
+    //             </button>
+    //           ) : (
+    //             // pin button
+    //             <button
+    //               onClick={(e) => {
+    //                 handlePinButtonClick(e, item.name);
+    //               }}
+    //             >
+    //               pin
+    //             </button>
+    //           )}
+
+    //           <button
+    //             onClick={(e) => {
+    //               handleCloseButtonClick(e, item.name);
+    //             }}
+    //           >
+    //             close
+    //           </button>
+
+    //           <div>{item.name}</div>
+    //           <div>{item.cases}</div>
+    //           <div>{item.deaths}</div>
+    //           <div>{item.todayCases}</div>
+    //           <div>{item.todayDeaths}</div>
+    //         </li>
+    //       ))}
+    //     </ul>
+    //   )}
+    // </>
   );
 }
 

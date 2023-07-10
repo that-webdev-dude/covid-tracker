@@ -63,7 +63,11 @@ const Autocomplete = ({ userOptions = [], onUserSelection }) => {
               key={index}
               onClick={(e) => handleSuggestionClick(e, suggestion)}
             >
-              <img src={suggestion.img} alt={`${suggestion.name}'s Flag`} />
+              <img
+                src={suggestion.img}
+                alt={`${suggestion.name}'s Flag`}
+                width="30"
+              />
               <span>{suggestion.name}</span>
             </li>
           ))}
