@@ -2,6 +2,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import Storage from "./tools/Storage";
 import Autocomplete from "./components/Autocomplete";
+import Chart from "./components/Chart";
 
 function App() {
   const [userSelection, setUserSelection] = useState("");
@@ -113,43 +114,49 @@ function App() {
           />
           {userData?.length > 0 && (
             <>
-              <small>{userData?.length}</small>
-              {userData.map((item) => (
-                <li key={item.id}>
-                  {itemIsPinned(item.id) ? (
-                    // unpin/unpin button
+              <ul>
+                {userData.map((item) => (
+                  <li key={item.id}>
+                    {itemIsPinned(item.id) ? (
+                      // unpin/unpin button
+                      <button
+                        onClick={(e) => {
+                          handleUnpinButtonClick(e, item.id);
+                        }}
+                      >
+                        unpin
+                      </button>
+                    ) : (
+                      <button
+                        onClick={(e) => {
+                          handlePinButtonClick(e, item.id);
+                        }}
+                      >
+                        pin
+                      </button>
+                    )}
+
                     <button
                       onClick={(e) => {
-                        handleUnpinButtonClick(e, item.id);
+                        handleCloseButtonClick(e, item.name);
                       }}
                     >
-                      unpin
+                      close
                     </button>
-                  ) : (
-                    <button
-                      onClick={(e) => {
-                        handlePinButtonClick(e, item.id);
-                      }}
-                    >
-                      pin
-                    </button>
-                  )}
 
-                  <button
-                    onClick={(e) => {
-                      handleCloseButtonClick(e, item.name);
-                    }}
-                  >
-                    close
-                  </button>
-
-                  <div>{item.name}</div>
-                  <div>{item.cases}</div>
-                  <div>{item.deaths}</div>
-                  <div>{item.todayCases}</div>
-                  <div>{item.todayDeaths}</div>
-                </li>
-              ))}
+                    <div>{item.name}</div>
+                    <div>{item.totalCases}</div>
+                    <div>{item.totalDeaths}</div>
+                    <div>{item.todayCases}</div>
+                    <div>{item.todayDeaths}</div>
+                    <Chart
+                      xAxis={item.history.date}
+                      series1={item.history.cases}
+                      series2={item.history.deaths}
+                    />
+                  </li>
+                ))}
+              </ul>
             </>
           )}
         </div>
@@ -161,3 +168,17 @@ function App() {
 }
 
 export default App;
+
+// import React from "react";
+// import Chart from "./components/Chart";
+// import "./App.css";
+
+// const App = () => {
+//   return (
+//     <div className="App">
+//       <Chart />
+//     </div>
+//   );
+// };
+
+// export default App;

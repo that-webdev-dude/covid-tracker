@@ -352,6 +352,22 @@ function randf(min, max) {
 }
 
 /**
+ * getFormattedDate
+ * returns the date string in the format of YYYY/MM/DD
+ * @param {Date} currentDate
+ * @returns
+ */
+function getFormattedDate(currentDate) {
+  // const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const dateString = `${year}/${month}/${day}`;
+
+  return dateString;
+}
+
+/**
  * generateTimeSeries
  * makes a synthetic timeseries, with a peak followed by a decay
  * @param {Date} startDate
@@ -398,7 +414,10 @@ function generateTimeSeries(
     if (enforcePositivity) {
       value = Math.max(0, value);
     }
-    timeSeries.push({ date: currentDate, value: value * scale + offset });
+    timeSeries.push({
+      date: getFormattedDate(currentDate),
+      value: value * scale + offset,
+    });
   }
   return timeSeries;
 }
@@ -414,12 +433,38 @@ const generate = () => {
     const endDate = new Date(2023, 3, 31); // March 31, 2023
     const peakDate = new Date(2023, 1, 28); // Feb 28, 2023
     const peakValue = rand(300, 600); // Peak value of the time series
-    const growthRate = randf(0.2, 0.4); // Growth rate
-    const decayRate = randf(0.1, 0.2); // Decay rate
-    const fluctuationRange = rand(10, 20); // Range of random fluctuations
+    const growthRate = randf(0.02, 0.04); // Growth rate
+    const decayRate = randf(0.001, 0.002); // Decay rate
+    const fluctuationRange = rand(100, 200); // Range of random fluctuations
     const enforcePositivity = true;
-    const scale = randf(1.5, 2.5);
-    const offset = rand(400, 600);
+    const scale = 1;
+    const offset = rand(100, 200);
+
+    const casesSeries = generateTimeSeries(
+      startDate,
+      endDate,
+      peakDate,
+      peakValue,
+      growthRate,
+      decayRate,
+      fluctuationRange,
+      enforcePositivity,
+      scale * 2,
+      offset
+    );
+
+    const deathsSeries = generateTimeSeries(
+      startDate,
+      endDate,
+      peakDate,
+      peakValue,
+      growthRate,
+      decayRate * 8,
+      fluctuationRange,
+      enforcePositivity,
+      scale / 2,
+      offset / 2
+    );
 
     return {
       // id: `_${uid(15)}`,
@@ -432,31 +477,16 @@ const generate = () => {
       todayCases: rand(100, 200),
       todayDeaths: rand(50, 100),
       lastUpdate: endDate,
-      series: {
-        cases: generateTimeSeries(
-          startDate,
-          endDate,
-          peakDate,
-          peakValue,
-          growthRate,
-          decayRate,
-          fluctuationRange,
-          enforcePositivity,
-          scale,
-          offset
-        ),
-        deaths: generateTimeSeries(
-          startDate,
-          endDate,
-          peakDate,
-          peakValue,
-          growthRate,
-          decayRate,
-          fluctuationRange,
-          enforcePositivity,
-          scale,
-          offset
-        ),
+      history: {
+        date: casesSeries.map((item) => {
+          return item.date;
+        }),
+        cases: casesSeries.map((item) => {
+          return item.value;
+        }),
+        deaths: deathsSeries.map((item) => {
+          return item.value;
+        }),
       },
     };
   });
